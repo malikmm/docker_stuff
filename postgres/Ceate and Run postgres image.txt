@@ -1,0 +1,93 @@
+1. Create postgres docker image
+
+	docker pull postgres
+
+1.*? Start postgress docker image
+
+	docker run --name my-postgres -e POSTGRES_PASSWORD=my-password -d -p 5432:5432 postgres
+	docker run --name test_postgres -e POSTGRES_PASSWORD=malik -d -p 5432:5432 postgres
+
+2. connect to postgress docker image
+
+Go inside your container and create a database:
+
+docker exec -it 05b3a3471f6f bash
+root@05b3a3471f6f:/# psql -U postgres
+postgres-# CREATE DATABASE mytest;
+postgres-# \q
+
+
+
+docker ps
+docker images
+
+docker pull dpage/pgadmin4
+docker run --name test-pgadmin -p 15432:80 -e "PGADMIN_DEFAULT_EMAIL=malikmm@hotmail.com" -e "PGADMIN_DEFAU
+LT_PASSWORD=my_password" -d dpage/pgadmin4
+
+Host: localhost port: 5432
+Database postgres
+usename: postgres
+password: malik
+
+root@086ea16bf16d:/# psql -U postgres
+psql (16.3 (Debian 16.3-1.pgdg120+1))
+Type "help" for help.
+
+postgres-# psql
+psql -f C:/Users/Mons Malik/Dev/repos/docker_stuff/postgres/world.sql
+
+psql -h localhost --username=pgadmin --list
+
+========================
+Summary:
+I learned how to create and run a Docker container for PostgreSQL
+
+Download postgre:
+
+docker pull postgres
+
+Run postgres:
+docker run --name test_postgres -e POSTGRES_PASSWORD=malik -d -p 5432:5432 postgres
+
+Check process:
+C:\Users\Mons Malik>docker ps
+CONTAINER ID   IMAGE      COMMAND                  CREATED             STATUS             PORTS                    NAMES
+086ea16bf16d   postgres   "docker-entrypoint.s…"   About an hour ago   Up About an hour   0.0.0.0:5432->5432/tcp   test_postgres
+
+Connect to the PostgreSQL CLI running inside the Docker container:
+C:\Users\Mons Malik>docker exec -it test_postgres bash
+[C:\Users\Mons Malik>docker exec -it 086 bash]
+
+Create a database:
+postgres=# CREATE DATABASE mytest;
+CREATE DATABASE
+postgres=# \q
+exit
+
+Connect again:
+C:\Users\Mons Malik>docker exec -it test_postgres bash
+
+Connects you to the PostgreSQL database using the default PostgreSQL user:
+root@086ea16bf16d:/# psql -h localhost -U postgres
+psql (16.3 (Debian 16.3-1.pgdg120+1))
+Type "help" for help.
+
+You can now run SQL queries against this database as usual:
+List dB's:
+postgres=# \l
+                                                      List of databases
+   Name    |  Owner   | Encoding | Locale Provider |  Collate   |   Ctype    | ICU Locale | ICU Rules |   Access privileges
+-----------+----------+----------+-----------------+------------+------------+------------+-----------+-----------------------
+ mytest    | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ postgres  | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+ template0 | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+           |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ template1 | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           | =c/postgres          +
+           |          |          |                 |            |            |            |           | postgres=CTc/postgres
+ world     | postgres | UTF8     | libc            | en_US.utf8 | en_US.utf8 |            |           |
+(5 rows)
+
+postgres=#
+
+psql -U test_postgres -W -d world -f C:/Users/Mons Malik/Dev/repos/docker_stuff/postgres/dbsamples-0.1.tar
